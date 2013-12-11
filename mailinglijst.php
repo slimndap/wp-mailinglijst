@@ -16,11 +16,31 @@ global $mailinglijst;
 
 require_once(__DIR__ . '/options.php');
 
+class WP_Mailinglijst_Widget extends WP_Widget {
+	function __construct() {
+		parent::__construct(
+			'mailinglijst_widget', // Base ID
+			__('Mailinglijst', 'text_domain'), // Name
+			array( 'description' => __( 'Sign-up form', 'text_domain' ), ) // Args
+		);
+	}
+
+	public function widget( $args, $instance ) {
+		global $mailinglijst;
+		echo $mailinglijst->render();
+	}
+
+}
+
 class WP_Mailinglijst {
 	function __construct() {
 		$this->options = get_option('mailinglijst');
 
-		add_shortcode('mailinglijst', array($this, 'shortcode'));
+		add_shortcode('mailinglijst', array($this, 'render'));
+
+		add_action( 'widgets_init', function(){
+		     register_widget( 'WP_Mailinglijst_Widget' );
+		});
 	}
 
 	function fast($att) {
@@ -44,7 +64,7 @@ class WP_Mailinglijst {
 		return '<iframe src="http://subscribe.mailinglijst.nl/?l='.$this->options['lijstnummer'].'"></iframe>';			
 	}
 
-	function shortcode($att, $content) {
+	function render($att='', $content='') {
 		switch ($this->options['formtype']) {
 			case 'iframe' :
 				return $this->iframe($att);
