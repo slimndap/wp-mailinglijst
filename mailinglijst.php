@@ -16,17 +16,17 @@ global $mailinglijst;
 
 require_once(__DIR__ . '/options.php');
 
-class Mailinglijst {
+class WP_Mailinglijst {
 	function __construct() {
 		$this->options = get_option('mailinglijst');
 
-		add_shortcode('mailinglijst', 'mailinglijst_shortcode');
+		add_shortcode('mailinglijst', array($this, 'shortcode'));
 	}
 
 	function fast($att) {
 		$html = '';
 		$html.= '<form action="http://subscribe.mailinglijst.nl" method="get">';
-		$html.= '<input type="hidden" name="l" value="'.$this->options['lijstnummer'].'" />';
+		$html.= '<input type="hidden" name="l" value="'.esc_attr($this->options['lijstnummer']).'" />';
 		$html.= '<input type="hidden" name="fast" value="1" />';
 		$html.= '<input type="text" id="mailinglijst_n" name="n" />';
 		$html.= '<input type="email" id="mailinglijst_e" name="e" />';
@@ -58,11 +58,5 @@ class Mailinglijst {
 	}
 }
 
-function mailinglijst_shortcode($att, $content) {
-	global $mailinglijst;
-	return $mailinglijst->shortcode($att, $content);
-}
-
-
-$mailinglijst = new Mailinglijst();
+$mailinglijst = new WP_Mailinglijst();
 ?>
