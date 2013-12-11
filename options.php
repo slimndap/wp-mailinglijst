@@ -1,5 +1,5 @@
 <?php
-class MailinglijstSettings
+class Mailinglijst_Settings
 {
     /**
      * Holds the values to be used in the fields callbacks
@@ -66,14 +66,14 @@ class MailinglijstSettings
 
         add_settings_section(
             'setting_section_id', // ID
-            'Lijstgegevens', // Title
+            __('Settings','mailinglijst'), // Title
             array( $this, 'print_section_info' ), // Callback
             'mailinglijst-admin' // Page
         );  
 
         add_settings_field(
             'lijstnummer', // ID
-            'Lijstnummer', // Title 
+            __('Lijstnummer','mailinglijst'), // Title 
             array( $this, 'lijstnummer_callback' ), // Callback
             'mailinglijst-admin', // Page
             'setting_section_id' // Section           
@@ -81,7 +81,7 @@ class MailinglijstSettings
 
         add_settings_field(
             'formtype', 
-            'Aanmeldformulier', 
+            __('Formtype','mailinglijst'), 
             array( $this, 'formtype_callback' ), 
             'mailinglijst-admin', 
             'setting_section_id'
@@ -110,7 +110,6 @@ class MailinglijstSettings
      */
     public function print_section_info()
     {
-        print 'Enter your settings below:';
     }
 
     /** 
@@ -130,9 +129,9 @@ class MailinglijstSettings
     public function formtype_callback()
     {
     	$options = array(
-    		'popup'=>'popup',
-    		'iframe' => 'iframe',
-    		'fast' => 'FAST'
+    		'popup'=>__('popup','mailinglijst'),
+    		'iframe' => __('iframe','mailinglijst'),
+    		'fast' => __('FAST','mailinglijst')
     	);
     	echo '<select id="formtype" name="mailinglijst[formtype]">';
     	foreach($options as $key=>$val) {
@@ -146,4 +145,4 @@ class MailinglijstSettings
 }
 
 if( is_admin() )
-    $my_settings_page = new MailinglijstSettings();
+    $mailinglijst_settings_page = new Mailinglijst_Settings();

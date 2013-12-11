@@ -10,6 +10,7 @@ Description: Integrate Mailinglijst sign-up forms into your website.
 Author: Jeroen Schmit, Slim & Dapper
 Version: 0.1
 Author URI: http://slimndap.com/
+Text Domain: mailinglijst
 */
 
 global $mailinglijst;
@@ -34,6 +35,7 @@ class WP_Mailinglijst_Widget extends WP_Widget {
 
 class WP_Mailinglijst {
 	function __construct() {
+		
 		$this->options = get_option('mailinglijst');
 
 		add_shortcode('mailinglijst', array($this, 'render'));
@@ -41,16 +43,21 @@ class WP_Mailinglijst {
 		add_action( 'widgets_init', function(){
 		     register_widget( 'WP_Mailinglijst_Widget' );
 		});
+		
+		add_action('plugins_loaded', function(){
+			load_plugin_textdomain('mailinglijst', false, 'mailinglijst/languages' );
+		});
+
 	}
 
 	function fast($att) {
 		$html = '';
 		$html.= '<form action="http://subscribe.mailinglijst.nl" method="get">';
-		$html.= '<input type="hidden" name="l" value="'.esc_attr($this->options['lijstnummer']).'" />';
+		$html.= '<input type="hidden" name="l" value="'.esc_attr($this->options['lijstnummer']).'" /></label>';
 		$html.= '<input type="hidden" name="fast" value="1" />';
-		$html.= '<input type="text" id="mailinglijst_n" name="n" />';
-		$html.= '<input type="email" id="mailinglijst_e" name="e" />';
-		$html.= '<input type="submit" value="Registreren" />';
+		$html.= '<label><span>'.__('Name','mailinglijst').'</span><input type="text" id="mailinglijst_n" name="n" /></label>';
+		$html.= '<label><span>'.__('Email','mailinglijst').'</span><input type="email" id="mailinglijst_e" name="e" /></label>';
+		$html.= '<input type="submit" value="'.__('Register','mailinglijst').'" />';
 		$html.= '</form>';
 		return $html;
 	}
