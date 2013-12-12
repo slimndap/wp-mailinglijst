@@ -26,9 +26,30 @@ This section describes how to install the plugin and get it working.
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Enter your 'lijstnummer' in the settings page under 'Setting/Mailinglijst'
 
-Now you can add a `[mailinglijst]` shortcode inside your posts!
+__Shortcode__
+
+You can add a `[mailinglijst]` shortcode inside your posts.
+
+If you are using the popup version then you also have to provide a text for the link:
+
+`[mailinglijst]Subscribe to our newsletter[/mailinglijst]
+
+__Widget__
+
+If your theme support widgets then you can also choose to use the Mailinglijst widget.
+
+__Contributors Welcome__
+
+* Submit a [pull request on Github](https://github.com/slimndap/wp-mailinglijst)
+
+__Author__
+
+* [Jeroen Schmit, Slim & Dapper](http://slimndap.com)
 
 == Changelog ==
+
+= 0.3 =
+* Added some error checking. 
 
 = 0.2 =
 * Added some CSS. Can be disabled in settings.

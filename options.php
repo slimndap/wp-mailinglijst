@@ -11,9 +11,33 @@ class Mailinglijst_Settings
      */
     public function __construct()
     {
-        add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
-        add_action( 'admin_init', array( $this, 'page_init' ) );
-    }
+		$this->options = get_option( 'mailinglijst' );
+		$this->admin_link = '<a href="options-general.php?page=mailinglijst-admin">Settings</a>';
+		
+		add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
+		add_action( 'admin_init', array( $this, 'page_init' ) );
+		
+		add_action('admin_notices', array($this, 'admin_notices'));
+		
+		add_filter("plugin_action_links_".plugin_basename(__FILE__), array($this, 'plugin_action_links_mailinglijst'));
+		
+   }
+
+	function plugin_action_links_mailinglijst($links) {
+		array_unshift($links, $this->admin_link); 
+		return $links;		
+	}
+
+	function admin_notices() {
+		global $mailinglijst;
+		if (!$mailinglijst->ready()) {
+	        printf(
+	            '<div class="error"><p><strong>Mailinglijst</strong></p><p>%s.</p><p>%s</p></div>',
+	            __('Almost ready! Please enter you lijstnummer','mailinglijst'),
+	            $this->admin_link
+	        );
+		}
+	}
 
     /**
      * Add options page
@@ -25,7 +49,7 @@ class Mailinglijst_Settings
             'Settings Admin', 
             'Mailinglijst', 
             'manage_options', 
-            'my-setting-admin', 
+            'mailinglijst-admin', 
             array( $this, 'create_admin_page' )
         );
     }
@@ -36,7 +60,6 @@ class Mailinglijst_Settings
     public function create_admin_page()
     {
         // Set class property
-        $this->options = get_option( 'mailinglijst' );
         ?>
         <div class="wrap">
             <?php screen_icon(); ?>
@@ -105,7 +128,7 @@ class Mailinglijst_Settings
     {
         $new_input = array();
         if( isset( $input['lijstnummer'] ) )
-            $new_input['lijstnummer'] = absint( $input['lijstnummer'] );
+            $new_input['lijstnummer'] = $input['lijstnummer'];
 
         if( isset( $input['formtype'] ) )
             $new_input['formtype'] = sanitize_text_field( $input['formtype'] );

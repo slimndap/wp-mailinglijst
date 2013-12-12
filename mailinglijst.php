@@ -1,14 +1,10 @@
 <?php
-/**
- * @package Mailinglijst
- * @version 0.2
- */
 /*
 Plugin Name: Mailinglijst
 Plugin URI: http://wordpress.org/plugins/wp-mailinglijst/
 Description: Integrate Mailinglijst sign-up forms into your website.
 Author: Jeroen Schmit, Slim & Dapper
-Version: 0.2
+Version: 0.3
 Author URI: http://slimndap.com/
 Text Domain: mailinglijst
 */
@@ -37,7 +33,7 @@ class WP_Mailinglijst {
 	function __construct() {
 		
 		$this->options = get_option('mailinglijst');
-
+		
 		add_shortcode('mailinglijst', array($this, 'render'));
 
 		add_action( 'widgets_init', function(){
@@ -45,7 +41,7 @@ class WP_Mailinglijst {
 		});
 		
 		add_action('plugins_loaded', function(){
-			load_plugin_textdomain('mailinglijst', false, 'mailinglijst/languages' );
+			load_plugin_textdomain('mailinglijst', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		});
 
 	}
@@ -80,16 +76,22 @@ class WP_Mailinglijst {
 	}
 
 	function render($att='', $content='') {
-		switch ($this->options['formtype']) {
-			case 'iframe' :
-				return $this->iframe($att);
-				break;
-			case 'fast' :
-				return $this->fast($att);
-				break;
-			default :
-				return $this->popup($att, $content);
+		if ($this->ready()) {
+			switch ($this->options['formtype']) {
+				case 'iframe' :
+					return $this->iframe($att);
+					break;
+				case 'fast' :
+					return $this->fast($att);
+					break;
+				default :
+					return $this->popup($att, $content);
+			}
 		}
+	}
+	
+	function ready() {
+		return (isset($this->options['lijstnummer']) && ($this->options['lijstnummer']>0));
 	}
 }
 
