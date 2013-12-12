@@ -1,0 +1,16 @@
+.mailinglijst_iframe {
+  width: 100%;
+  height: 570px;
+  border: none;
+}
+.mailinglijst_fast form label {
+  display: block;
+  margin-top: 0.5em;
+}
+.mailinglijst_fast form label span {
+  display: inline-block;
+  width: 80px;
+}
+.mailinglijst_fast form .mailinglijst_submit {
+  margin-top: 1em;
+}

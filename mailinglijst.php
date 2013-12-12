@@ -51,24 +51,32 @@ class WP_Mailinglijst {
 	}
 
 	function fast($att) {
+		if (!isset($this->options['customcss'])) {
+			wp_enqueue_style('mailinglijst_css', plugins_url( 'style.css', __FILE__ ));
+		}
 		$html = '';
-		$html.= '<form action="http://subscribe.mailinglijst.nl" method="get">';
+		$html.= '<div class="mailinglijst_fast">';
+		$html.= '<form action="http://subscribe.mailinglijst.nl" method="get" target="_blank">';
 		$html.= '<input type="hidden" name="l" value="'.esc_attr($this->options['lijstnummer']).'" /></label>';
 		$html.= '<input type="hidden" name="fast" value="1" />';
 		$html.= '<label><span>'.__('Name','mailinglijst').'</span><input type="text" id="mailinglijst_n" name="n" /></label>';
-		$html.= '<label><span>'.__('Email','mailinglijst').'</span><input type="email" id="mailinglijst_e" name="e" /></label>';
-		$html.= '<input type="submit" value="'.__('Register','mailinglijst').'" />';
+		$html.= '<label><span>'.__('Email','mailinglijst').'</span><input type="email" id="mailinglijst_e" name="e" required /></label>';
+		$html.= '<input class="mailinglijst_submit" type="submit" value="'.__('Register','mailinglijst').'" />';
 		$html.= '</form>';
+		$html.= '</div>';
 		return $html;
 	}
 
 	function popup($att, $content) {
-		wp_enqueue_script('mailinglijst', plugins_url( 'js/nieuwsbrief_v2.js', __FILE__ ), array(), NULL, TRUE );
-		return '<a href="javascript:subscribe('.$this->options['lijstnummer'].');">'.$content.'</a>';
+		wp_enqueue_script('mailinglijst_js', plugins_url( 'js/nieuwsbrief_v2.js', __FILE__ ), array(), NULL, TRUE );
+		return '<a class="mailinglijst_popup_link" href="javascript:subscribe('.$this->options['lijstnummer'].');">'.$content.'</a>';
 	}
 
 	function iframe($att) {
-		return '<iframe src="http://subscribe.mailinglijst.nl/?l='.$this->options['lijstnummer'].'"></iframe>';			
+		if (!isset($this->options['customcss'])) {
+			wp_enqueue_style('mailinglijst_css', plugins_url( 'style.css', __FILE__ ));
+		}
+		return '<iframe class="mailinglijst_iframe" src="http://subscribe.mailinglijst.nl/?l='.$this->options['lijstnummer'].'"></iframe>';			
 	}
 
 	function render($att='', $content='') {

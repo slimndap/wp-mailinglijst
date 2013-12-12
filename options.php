@@ -85,6 +85,14 @@ class Mailinglijst_Settings
             array( $this, 'formtype_callback' ), 
             'mailinglijst-admin', 
             'setting_section_id'
+        );  
+            
+        add_settings_field(
+            'customcss', 
+            __('I want to use my own CSS','mailinglijst'), 
+            array( $this, 'customcss_callback' ), 
+            'mailinglijst-admin', 
+            'setting_section_id'
         );      
     }
 
@@ -101,6 +109,9 @@ class Mailinglijst_Settings
 
         if( isset( $input['formtype'] ) )
             $new_input['formtype'] = sanitize_text_field( $input['formtype'] );
+
+        if( isset( $input['customcss'] ) )
+            $new_input['customcss'] = $input['customcss'];
 
         return $new_input;
     }
@@ -142,6 +153,15 @@ class Mailinglijst_Settings
     	}
     	echo '</select>';
     }
+
+    public function customcss_callback()
+    {
+        printf(
+            '<input type="checkbox" id="customcss" name="mailinglijst[customcss]" value="yes" %s />',
+    		(isset( $this->options['customcss'] ) && (esc_attr( $this->options['customcss'])=='yes')) ? 'checked="checked"' : ''
+        );
+    }
+
 }
 
 if( is_admin() )
