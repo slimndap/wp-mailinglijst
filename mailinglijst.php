@@ -1,14 +1,14 @@
 <?php
 /**
  * @package Mailinglijst
- * @version 0.1
+ * @version 0.2
  */
 /*
 Plugin Name: Mailinglijst
-Plugin URI: http://wordpress.org/plugins/mailinglijst/
+Plugin URI: http://wordpress.org/plugins/wp-mailinglijst/
 Description: Integrate Mailinglijst sign-up forms into your website.
 Author: Jeroen Schmit, Slim & Dapper
-Version: 0.1
+Version: 0.2
 Author URI: http://slimndap.com/
 Text Domain: mailinglijst
 */

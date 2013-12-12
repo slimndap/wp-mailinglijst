@@ -2,7 +2,7 @@
 Contributors: slimndap
 Tags: email, mailinglijst, marketing, newsletter, plugin, signup, shortcode
 Requires at least: 2.8
-Tested up to: 3.7.1
+Tested up to: 3.8
 Stable tag: trunk
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -22,11 +22,11 @@ Mailinglijst is an email marketing solution provided by EM-Cultuur (http://www.e
 This section describes how to install the plugin and get it working.
 
 
-1. Upload `plugin-name.php` to the `/wp-content/plugins/` directory
+1. Add the `mailinglijst` directory to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Enter your 'lijstnummer' in the settings page under 'Setting/Mailinglijst'
 
-Now you can add a [mailinglijst] shortcode inside your posts!
+Now you can add a `[mailinglijst]` shortcode inside your posts!
 
 == Changelog ==
 
